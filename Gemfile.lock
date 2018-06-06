@@ -1,0 +1,19 @@
+GIT
+  remote: https://github.com/deltabouche/rbau.git
+  revision: 3c5ad073c1b35abf95a305e409c767d46199759e
+  specs:
+    rbau (0.0.1)
+
+GEM
+  specs:
+    bin_tools (0.0.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bin_tools
+  rbau!
+
+BUNDLED WITH
+   1.16.1
