@@ -170,6 +170,7 @@ song = MidiBuilder.new('test.mid', tempo: 150) do
 
   ch 10
   set_gate 1
+  patch 8
 
   # Hi hats
   time_block do
@@ -210,6 +211,7 @@ song = MidiBuilder.new('test.mid', tempo: 150) do
 end
 
 host = RbAU.new
-host.add_track("DLSMusicDevice")
+host.add_track("SOUND Canvas VA")
+host.load_au_preset("sc88pro.aupreset")
 host.load_midi_file("test.mid")
 host.bounce_to_file("test.wav")
