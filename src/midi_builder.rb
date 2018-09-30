@@ -80,6 +80,10 @@ class MidiBuilder
     len
   end
 
+  # def cc_sweep(&block)
+  #   the_len = time_block(&block)
+  # end
+
   def group_block(&block)
     advance instance_eval(&block)
   end
@@ -98,6 +102,25 @@ class MidiBuilder
       channel: ch,
       type: :program,
       program: n
+    )
+  end
+
+  def pitch(val, ch: channel)
+    add_event(
+      timestamp: timestamp,
+      channel: ch,
+      type: :pitch,
+      val: [[-0x1FFF, ((val * 0x2000.to_f).to_i)].max, 0x2000].min
+    )
+  end
+
+  def cc(num, val, ch: channel)
+    add_event(
+      timestamp: timestamp,
+      channel: ch,
+      type: :cc,
+      num: num,
+      val: val
     )
   end
 
