@@ -160,7 +160,7 @@ class MidiBuilder
     @auto_advance = val
   end
 
-  def note_full(n, ch: channel, velocity: 127, duration: note_len, off_velocity: 0)
+  def note_full(n, ch: channel, velocity: 127, duration: note_len, off_velocity: 0, note_gate: gate)
     add_event(
       timestamp: timestamp,
       channel: ch,
@@ -170,7 +170,7 @@ class MidiBuilder
     )
 
     add_event(
-      timestamp: timestamp + (duration * gate).round,
+      timestamp: timestamp + (duration * note_gate).round,
       channel: ch,
       type: :note_off,
       note: n,
@@ -179,13 +179,13 @@ class MidiBuilder
     advance if auto_advance
   end
 
-  def note(n, modifier = 0, ch: channel, velocity: 127, duration: note_len, off_velocity: 0, oct_offset: 0)
+  def note(n, modifier = 0, ch: channel, velocity: 127, duration: note_len, off_velocity: 0, oct_offset: 0, note_gate: gate)
     n, modifier = n if n.is_a? Array
-    note_full(note_with_octave(n) + oct_offset * 12 + modifier, ch: ch, velocity: velocity, duration: duration, off_velocity: off_velocity)
+    note_full(note_with_octave(n) + oct_offset * 12 + modifier, ch: ch, velocity: velocity, duration: duration, off_velocity: off_velocity, note_gate: note_gate)
   end
 
-  def drum(n, ch: channel, velocity: 127, duration: note_len, off_velocity: 0, oct_offset: 0)
-    note_full(drum_n(n), ch: ch, velocity: velocity, duration: duration, off_velocity: off_velocity)
+  def drum(n, ch: channel, velocity: 127, duration: note_len, off_velocity: 0, oct_offset: 0, note_gate: gate)
+    note_full(drum_n(n), ch: ch, velocity: velocity, duration: duration, off_velocity: off_velocity, note_gate: note_gate)
   end
 
   def seek(position)
